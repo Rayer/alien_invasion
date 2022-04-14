@@ -1,0 +1,6 @@
+Akel south=Beth
+Beth north=Akel west=Summerjack
+Summerjack east=Beth west=Delmon
+Delmon west=Summerjack north=Ur-Gorath
+Ur-Gorath south=Delmon east=Gresal north=Rickel
+Springfield north=Summerjack south=Vampfont
