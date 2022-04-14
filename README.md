@@ -4,6 +4,10 @@ Mad aliens are about to invade the earth and you are tasked with simulating the 
 
 You are given a map containing the names of cities in the non-existent world of X. The map is in a file, with one city per line. The city name is first, followed by 1-4 directions (north, south, east, or west). Each one represents a road to another city that lies in that direction.
 
+## Overview
+
+![](https://github.com/Rayer/alien_invasion/blob/master/Overview.jpg)
+
 ## Roles
 1. Alien will enter a random city
 2. Alien will try to enter an adjacent city
@@ -17,7 +21,8 @@ This release ships with a sample map file, and a sample map file with error :
 - test_resources/sample_map.txt
 - test_resources/sample_map_error.txt
 
-And for `sample_map.txt`, you can take a look upon `sample_map.png` in same directory to know it's actual layout for each cities.
+And for `sample_map.txt`, you can take a look upon `sample_map.png` in same directory to know it's actual layout for each cities :
+![](https://github.com/Rayer/alien_invasion/blob/master/test_resources/sample_map.png)
 
 We can start the game by running the following command:
 
