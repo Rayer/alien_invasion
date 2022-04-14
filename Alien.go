@@ -4,6 +4,7 @@ import "math/rand"
 
 var alienSerialCount = 0
 
+// Alien is a struct that represents an alien. Alien always attached in struct City
 type Alien struct {
 	Number int
 	Steps  int
@@ -17,6 +18,8 @@ func NewAlien() *Alien {
 	return &Alien{Number: alienSerialCount, Steps: 0, Alive: true}
 }
 
+// Move is a method that moves alien to a random neighbor city
+// All battle result against two aliens is done in City.AlienMigrate
 func (a *Alien) Move(from *City) (to *City, step int) {
 	a.Steps++
 	if a.Alive == false {

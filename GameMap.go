@@ -88,6 +88,7 @@ func newCity(name string) *City {
 	return &City{Name: name, Neighborhoods: make(Neighborhoods, DirectionSize), Exists: true}
 }
 
+// AlienMigrate Moves alien to new city, and decide if needs battle(and destroy the city as well)
 func (c *City) AlienMigrate(to *City) {
 	alien := c.AlienInCity
 	if alien == nil || c.Exists == false {
@@ -102,6 +103,7 @@ func (c *City) AlienMigrate(to *City) {
 	c.AlienInCity = nil
 }
 
+// IsIsolatedOrDestroyed means that the city can't perform any moving action
 func (c *City) IsIsolatedOrDestroyed() bool {
 	if c.Exists == false {
 		return true
@@ -124,6 +126,7 @@ func NewGameMap() *GameMap {
 	}
 }
 
+// UpdateCityWithNeighborhood updateNeighborhoods update the city's neighborhood, if neighbor city is not exists, it will created
 func (m *GameMap) UpdateCityWithNeighborhood(name string, direction Direction, neighborhoodCityName string) error {
 	city := m.UpsertCity(name)
 	//No nil check because m.UpsertCity will be always exists
@@ -140,6 +143,7 @@ func (m *GameMap) UpdateCityWithNeighborhood(name string, direction Direction, n
 	return nil
 }
 
+// UpsertCity Create a city if not exists, and return the city
 func (m *GameMap) UpsertCity(name string) *City {
 	var city *City
 	if c, exists := m.cities[name]; !exists {
@@ -151,6 +155,7 @@ func (m *GameMap) UpsertCity(name string) *City {
 	return city
 }
 
+// GetExistCity return the city, if not exists, return nil
 func (m *GameMap) GetExistCity(name string) *City {
 	if c, cityInMap := m.cities[name]; cityInMap {
 		if c.Exists {
@@ -160,6 +165,7 @@ func (m *GameMap) GetExistCity(name string) *City {
 	return nil
 }
 
+// destroyCity set city destroyed, error if not such city or already destroyed.
 func (m *GameMap) destroyCity(name string) error {
 	if c, cityInMap := m.cities[name]; cityInMap {
 		if c.Exists {
@@ -173,7 +179,7 @@ func (m *GameMap) destroyCity(name string) error {
 	return nil
 }
 
-// AssignAliens Assign aliens to cities
+// AssignAliens Assign aliens to cities. If alien number greater than available city, will return error
 func (m *GameMap) AssignAliens(aliens []*Alien) error {
 	for _, alien := range aliens {
 		var candidates []*City
@@ -190,6 +196,7 @@ func (m *GameMap) AssignAliens(aliens []*Alien) error {
 	return nil
 }
 
+// Update will be game updater. It will update game progress on city's basis.
 func (m *GameMap) Update() (willContinue bool) {
 	for _, city := range m.cities {
 		if city.AlienInCity != nil {
@@ -202,6 +209,7 @@ func (m *GameMap) Update() (willContinue bool) {
 	return true
 }
 
+// DumpMap will dump the game map, the format exactly same as map file that input.
 func (m *GameMap) DumpMap() string {
 	var result []string
 	for _, city := range m.cities {
@@ -212,6 +220,7 @@ func (m *GameMap) DumpMap() string {
 	return strings.Join(result, "\n")
 }
 
+// ExistCityCount returns cities number that are not destroyed
 func (m *GameMap) ExistCityCount() int {
 	ret := 0
 	for _, c := range m.cities {
