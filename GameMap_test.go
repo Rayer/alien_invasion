@@ -709,7 +709,8 @@ func TestGameMap_DumpMap(t *testing.T) {
 				return m
 			}(),
 			validate: func(t *testing.T, dumpedString string) {
-				assert.Equal(t, "Qu-ux north=Foo\nBee east=Bar\nFoo north=Bar west=Baz south=Qu-ux\nBar west=Bee south=Foo\nBaz east=Foo", dumpedString)
+				//Should be 5 entities(lines), so 4 \n
+				assert.Equal(t, 4, strings.Count(dumpedString, "\n"))
 			},
 		},
 		{
