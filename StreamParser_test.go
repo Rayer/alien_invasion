@@ -155,6 +155,15 @@ func TestStreamParser_parseSingleLine(t *testing.T) {
 			wantErrorSize: 0,
 		},
 		{
+			name: "Happy Path with invalid pair",
+			args: args{
+				line:    "Foo north=Bar west=Baz south=Qu-ux east=EAC=aina",
+				gameMap: func() *GameMap { m := NewGameMap(); m.UpsertCity("Baz"); return m }(),
+			},
+			wantSize:      4,
+			wantErrorSize: 0,
+		},
+		{
 			name: "Conflict path",
 			args: args{
 				line: "Foo north=Bar west=Baz south=Qu-ux",
