@@ -54,6 +54,20 @@ func TestAlien_Move(t *testing.T) {
 			wantMoved: false,
 			wantStep:  11,
 		},
+		{
+			name: "Will not move to other city since alien is dead",
+			fields: fields{
+				Number: 0,
+				Steps:  10,
+				Alive:  false,
+			},
+			args: args{
+				from: newCity("city1"),
+				to:   newCity("city2"),
+			},
+			wantMoved: false,
+			wantStep:  11,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
