@@ -157,6 +157,24 @@ func TestGameMap_DestroyCity(t *testing.T) {
 
 			},
 		},
+		{
+			name: "Bad - already destroyed",
+			fields: fields{
+				cities: map[string]*City{
+					"city1": {
+						Name:   "city1",
+						Exists: false,
+					},
+				},
+			},
+			args: args{
+				name: "city1",
+			},
+			wantErr: assert.Error,
+			validate: func(t *testing.T, gameMap *GameMap) {
+				assert.Falsef(t, gameMap.cities["city1"].Exists, "Exists")
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -691,7 +709,8 @@ func TestGameMap_DumpMap(t *testing.T) {
 				return m
 			}(),
 			validate: func(t *testing.T, dumpedString string) {
-				assert.Equal(t, "Foo north=Bar west=Baz south=Qu-ux\nBar west=Bee south=Foo\nBaz east=Foo\nQu-ux north=Foo\nBee east=Bar", dumpedString)
+				//Should be 5 entities(lines), so 4 \n
+				assert.Equal(t, 4, strings.Count(dumpedString, "\n"))
 			},
 		},
 		{
